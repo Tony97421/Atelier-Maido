@@ -1,43 +1,43 @@
 DROP TABLE IF EXISTS `users`;
 
-create table
+CREATE TABLE
     `users` (
-        `id` int primary key auto_increment not null,
+        `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
         `nom` VARCHAR(80) NOT NULL,
         `email` VARCHAR(255) NOT NULL,
-        `password` VARCHAR(50) not null
+        `password` VARCHAR(50) NOT NULL
+    );
+
+    DROP TABLE IF EXISTS `categorie`;
+
+CREATE TABLE
+    `categorie` (
+        `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+        `nom` VARCHAR(80) NOT NULL,
+        `position` INT
     );
 
 DROP TABLE IF EXISTS `bijoux`;
 
-create table
-    `bijoux`(
-        `id` int PRIMARY KEY auto_increment NOT NULL,
+CREATE TABLE
+    `bijoux` (
+        `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
         `nature` VARCHAR(255) NOT NULL,
         `description` VARCHAR(255) NOT NULL,
         `prix` VARCHAR(50) NOT NULL,
         `image` VARCHAR(255) NOT NULL,
-        ` quantity` INT NOT NULL,
+        `quantity` INT NOT NULL,
         `categorie` INT NOT NULL,
-        CONSTRAINT FK_categorie_id FOREIGN key (`categorie`) REFERENCES `categorie`(`id`)
+        CONSTRAINT FK_categorie_id FOREIGN KEY (`categorie`) REFERENCES `categorie`(`id`)
     );
 
-DROP TABLE IF EXISTS `categorie`;
-
-create table
-    `categorie`(
-        `id` int PRIMARY KEY auto_increment NOT NULL,
-        `nom` VARCHAR(80) NOT NULL,
-        `position` INT,
-    );
-
-DROPT TABLE IF EXISTS `commandes`;
+DROP TABLE IF EXISTS `commandes`;
 
 CREATE TABLE
     `commandes` (
         `userId` INT NOT NULL,
         `bijouxId` INT NOT NULL,
-        CONSTRAINT FK_commandes_user_id FOREIGN KEY (`userId`) REFERENCES `user` (`id`),
+        CONSTRAINT FK_commandes_user_id FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
         CONSTRAINT FK_commandes_bijoux_id FOREIGN KEY (`bijouxId`) REFERENCES `bijoux` (`id`),
         PRIMARY KEY (`userId`, `bijouxId`)
     );
